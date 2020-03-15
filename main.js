@@ -35,13 +35,12 @@ const addTwitter = () => {
         }
     }
     let contentConvert = arrayContent.join(' ')
-    console.log('user image:', userImg.value)
+        // console.log('user image:', userImg.value)
     let twitterStory = {
         id: id,
         userName: 'Hung',
         timeTwitt: moment().startOf('hour').fromNow(),
         content: contentConvert,
-        image: userImg.value,
         like: false,
         comment: '',
         hashtagText: hashTagArray
