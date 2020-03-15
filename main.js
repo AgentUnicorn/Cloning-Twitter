@@ -27,10 +27,10 @@ const addTwitter = () => {
     let styleMention = `style="font-weight:bold; color: red; cursor: pointer;"`
     let originalContent = textArea.value
     let arrayContent = originalContent.split(' ')
-    hashTagArray = arrayContent.filter((text) => text[0] == '#')
+    hashTagArray = arrayContent.filter((text) => text[0] === '#')
 
     for (let i = 0; i < arrayContent.length; i++) {
-        if (arrayContent[i][0] == '#' || arrayContent[i][0] == '@') {
+        if (arrayContent[i][0] === '#' || arrayContent[i][0] === '@') {
             arrayContent[i] = `<span onclick="hashTagFilter('${arrayContent[i]}')" ${arrayContent[i][0] == '@' ? styleMention : ''} style="color:blue; cursor: pointer;">${arrayContent[i]}</span>`
         }
     }
@@ -46,7 +46,7 @@ const addTwitter = () => {
         hashtagText: hashTagArray
 
     }
-    twitterArray.push(twitterStory)
+    twitterArray.unshift(twitterStory)
     console.log('this is hastag', twitterStory.hashtagText)
     render(twitterArray)
     id++
@@ -100,7 +100,7 @@ const reTwitt = (originId) => {
             // more
         } // original tweet info
     }
-    twitterArray.push(reTwittObject)
+    twitterArray.unshift(reTwittObject)
     render(twitterArray)
     id++
 }
@@ -153,5 +153,6 @@ const render = (array) => {
     }).join('')
 
     document.getElementById('twitter-stories').innerHTML = resultArray
+    document.getElementById('total-twitter').innerHTML = twitterArray.length
 
 }
