@@ -17,7 +17,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
             <a class="navbar-brand" href="#">
-                <img src="logo" width="30" height="30" alt="">
+                <img src="" width="30" height="30" alt="">
             </a>
             <form class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
@@ -36,11 +36,137 @@
             </ul>
         </div>
     </nav>
+    <h1 class="text-center" id="userName">hello</h1>
+    <div class="container jumbotron">
+        <textarea id="textArea" class="w-100 rounded h-50" type="text" placeholder="Type your text in here"></textarea>
+        <div class="input-group mb-3">
+            <div class="custom-file">
+                <input type="file" class="custom-file-input" id="user-img">
+                <label class="custom-file-label" for="inputGroupFile02" aria-describedby="inputGroupFileAddon02">Choose file</label>
+            </div>
+            <div class="input-group-append">
+                <span class="input-group-text" id="inputGroupFileAddon02">Upload</span>
+            </div>
+        </div>
+        <button onclick="addTwitter()">Twitte</button>
+        <div id="countText">140 character</div>
+        <div id="twitter-stories">
 
+        </div>
+        <div id="retwitt-result">
+
+        </div>
+    </div>
+
+    <footer class="mt-5 ">
+        <div class="jumbotron mb-0 w-100" style="background-color: black;">
+            <div class="container footer-about">
+                <div class="row">
+                    <div class="col-lg-7 pt-2">Get connected with your friends!</div>
+                    <div class="col-lg-3 px-0">
+
+                    </div>
+                    <div class="col-lg-2">
+                        <a target="_blank" rel="noopener noreferrer" href="https://www.facebook.com/Eatwith/"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiPjxkZWZzPjxwYXRoIGQ9Ik00Ljk4NyAxNlY4aDIuMjE5TDcuNSA1LjI0MUg0Ljk4N2wuMDA0LTEuMzhjMC0uNzIuMDY5LTEuMTA1IDEuMTA2LTEuMTA1aDEuMzg3VjBINS4yNjVDMi42IDAgMS42NjIgMS4zMzggMS42NjIgMy41ODd2MS42NTVIMFY4aDEuNjYydjhoMy4zMjV6IiBpZD0iYSIvPjwvZGVmcz48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxjaXJjbGUgc3Ryb2tlPSIjRkJGOUVFIiBzdHJva2Utd2lkdGg9IjIiIGN4PSIxNiIgY3k9IjE2IiByPSIxNSIvPjx1c2UgZmlsbD0iI0ZCRjlFRSIgZmlsbC1ydWxlPSJub256ZXJvIiB4bGluazpocmVmPSIjYSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMTIgOCkiLz48L2c+PC9zdmc+"
+                                alt="Social media logo for facebook"></a>
+                        <a target="_blank" rel="noopener noreferrer" href="https://twitter.com/Eatwith"><img src="https://static.eatwith.com/1166faf3323385691440455591fc0b3b.svg" alt="Social media logo for twitter"></a>
+                        <a target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/eatwith/"><img src="https://static.eatwith.com/ed313bc34268a4df707b88a9069ac3fe.svg" alt="Social media logo for instagram"></a>
+                        <a target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/company/eatwith/"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiPjxkZWZzPjxjaXJjbGUgaWQ9ImEiIGN4PSIxNiIgY3k9IjE2IiByPSIxNiIvPjwvZGVmcz48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxtYXNrIGlkPSJiIiBmaWxsPSIjZmZmIj48dXNlIHhsaW5rOmhyZWY9IiNhIi8+PC9tYXNrPjxjaXJjbGUgc3Ryb2tlPSIjRkJGOUVFIiBzdHJva2Utd2lkdGg9IjIiIGN4PSIxNiIgY3k9IjE2IiByPSIxNSIvPjxwYXRoIGQ9Ik0xMS41ODEgMjNIOC4yNjRWMTIuMzE4aDMuMzE3VjIzem0tMS42Ni0xMi4xNEM4Ljg2MSAxMC44NiA4IDkuOTgyIDggOC45MjFhMS45MjEgMS45MjEgMCAxMTMuODQyIDBjMCAxLjA2LS44NiAxLjk0LTEuOTIgMS45NHpNMjMuOTk2IDIzaC0zLjMxdi01LjJjMC0xLjI0LS4wMjUtMi44MjktMS43MjQtMi44MjktMS43MjUgMC0xLjk5IDEuMzQ3LTEuOTkgMi43NFYyM0gxMy42NlYxMi4zMThoMy4xODJ2MS40NTdoLjA0NmMuNDQzLS44NCAxLjUyNS0xLjcyNSAzLjEzOS0xLjcyNSAzLjM1NyAwIDMuOTc0IDIuMjEgMy45NzQgNS4wODJWMjNoLS4wMDR6IiBmaWxsPSIjRkJGOUVFIiBmaWxsLXJ1bGU9Im5vbnplcm8iIG1hc2s9InVybCgjYikiLz48L2c+PC9zdmc+"
+                                alt="Social media logo for linkedin"></a>
+                    </div>
+                </div>
+                <hr class="my-4">
+                <div class="row ">
+                    <div class="col-lg-2 col-md-2">
+                        <div class=>Twitter</div>
+                        <div>
+                            <div>
+                                <a class="text-white" href="">Become a host</a>
+                            </div>
+                            <div>
+                                <a class="text-white" href="">Private Events</a>
+                            </div>
+                            <div>
+                                <a class="text-white" href="">Refer a friend</a>
+                            </div>
+                            <div>
+                                <a class="text-white" href="">Travel Agents</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2">
+                        <div>Company</div>
+                        <div>
+                            <div>
+                                <a class="text-white" href="">Trust</a>
+                            </div>
+                            <div>
+                                <a class="text-white" href="">Jobs</a>
+                            </div>
+                            <div>
+                                <a class="text-white" href="">About Us</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2">
+                        <div>Media</div>
+                        <div>
+                            <div>
+                                <a class="text-white" href="">Blog</a>
+                            </div>
+                            <div>
+                                <a class="text-white" href="">Press</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2">
+                        <div>Help & Support</div>
+                        <div>
+                            <div>
+                                <a class="text-white" href="">How it works</a>
+                            </div>
+                            <div>
+                                <a class="text-white" href="">FAQ</a>
+                            </div>
+                            <div>
+                                <a class="text-white" href="">Contact us</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3 mt-4">
+                        <div class="pl-3">We’re here on</div>
+                        <ul class="mb-0">
+                            <li class="text-white">
+                                Mon-Fri 9AM-5PM CET
+                            </li>
+                            <li class="text-white">
+                                Sat 9AM-1PM CET
+                            </li>
+                        </ul>
+                        <a class="ml-3 text-white" href="">Email: support@eathere.com</a>
+                    </div>
+                </div>
+
+                <hr class="my-4">
+
+                <div class="d-flex justify-content-start">
+                    <div>EatHere - Copyright 2020</div>
+                    <div class="ml-3">
+                        <a class="text-white" href="">Terms and Conditions</a>
+                    </div>
+                    <div class="ml-3">
+                        <a class="text-white" href="">Privacy Policy</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
 
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="moment-with-locales.js"></script>
+    <script src="main.js"></script>
 </body>
 
 </html>
