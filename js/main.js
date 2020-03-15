@@ -189,6 +189,7 @@ const render = (array) => {
     document.getElementById('twitter-stories').innerHTML = resultArray
     document.getElementById('total-twitter').innerHTML = twitterArray.length
     document.getElementById('countText').innerHTML = `140 characters left`
+    document.getElementById('userNameDisplay').innerHTML = currentName.userName
     saveData()
 
 }

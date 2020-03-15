@@ -20,14 +20,17 @@
             <div class="col border-right border-secondary">
                 <nav class="nav flex-column pstfix">
                     <img src="/img/HB8.png" width="100" height="100">
+                    <a class="h3 nav-link mt-1 border-bottom border-secondary " href="#">
+                        <img class="mr-2 rounded-pill" src="img/cat.png" width="75" height="75">
+                        <span id="userNameDisplay" class="text-primary"></span>
+                    </a>
                     <a class="h4 rounded-pill nav-link btn-outline-primary" href="#"><i class="fas fa-home mr-2"></i>Home</a>
-                    <a class="h4 rounded-pill nav-link mt-1 btn-outline-primary" href="#"><i class="fab fa-slack-hash mr-2"></i>Explore</a>
-                    <a class="h4 rounded-pill nav-link mt-1 btn-outline-primary" href="#"><i class="far fa-bell mr-2"></i>Notifications</a>
-                    <a class="h4 rounded-pill nav-link mt-1 btn-outline-primary" href="#"><i class="far fa-comment-dots mr-2"></i>Messenger</a>
-                    <a class="h4 rounded-pill nav-link mt-1 btn-outline-primary" href="#"><i class="far fa-bookmark mr-2"></i>Bookmarks</a>
-                    <a class="h4 rounded-pill nav-link mt-1 btn-outline-primary" href="#"><i class="far fa-list-alt mr-2"></i>Lists</a>
-                    <a class="h4 rounded-pill nav-link mt-1 btn-outline-primary" href="#"><img class="mr-2 rounded-pill" src="img/cat.png" width="30" height="30">Profile</a>
-                    <a class="h4 rounded-pill nav-link mt-1 btn-outline-primary" href="#"><i class="far fa-caret-square-down mr-2"></i>More</a>
+                    <a class="h4 text-dark rounded-pill nav-link mt-1 btn-outline-primary" href="#"><i class="fab fa-slack-hash mr-2"></i>Explore</a>
+                    <a class="h4 text-dark rounded-pill nav-link mt-1 btn-outline-primary" href="#"><i class="far fa-bell mr-2"></i>Notifications</a>
+                    <a class="h4 text-dark rounded-pill nav-link mt-1 btn-outline-primary" href="#"><i class="far fa-comment-dots mr-2"></i>Messenger</a>
+                    <a class="h4 text-dark rounded-pill nav-link mt-1 btn-outline-primary" href="#"><i class="far fa-bookmark mr-2"></i>Bookmarks</a>
+                    <a class="h4 text-dark rounded-pill nav-link mt-1 btn-outline-primary" href="#"><i class="far fa-list-alt mr-2"></i>Lists</a>
+                    <a class="h4 text-dark rounded-pill nav-link mt-1 btn-outline-primary" href="#"><i class="far fa-caret-square-down mr-2"></i>More</a>
                 </nav>
             </div>
 
@@ -41,9 +44,9 @@
                 <div class="m-2 bd-highlight border-bottom border-secondary">
                     <div class="d-flex flex-row justify-content-between">
                         <div class="d-flex flex-row">
-                            <a class="h4 pt-1 btn" style="color: rgb(47,208,231); font-size: 20px"><i class="far fa-image"></i></a>
-                            <a class="h4 pt-1 btn"  style="color: rgb(47,208,231); font-size: 20px"><i class="fas fa-map-marker-alt"></i></a>
-                            <a class="h4 pt-1 btn"  style="color: rgb(47,208,231); font-size: 20px"><i class="far fa-smile-beam"></i></a>
+                            <a class="h4 pt-1 btn" style="font-size: 20px"><i class="inputIcon far fa-image"></i></a>
+                            <a class="h4 pt-1 btn"  style="font-size: 20px"><i class="inputIcon fas fa-map-marker-alt"></i></a>
+                            <a class="h4 pt-1 btn"  style="font-size: 20px"><i class="inputIcon far fa-smile-beam"></i></a>
                         </div>
                         <div class="d-flex flex-row-reverse">
                             <button class="btn btn-outline-primary rounded-pill h-75" onclick="addTwitter()">Tweet</button>
@@ -51,7 +54,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="ml-2 m-2 pb-2 border-bottom border-secondary">Total Tweeters:
+                <div class="ml-2 m-2 p-2 totalTweet text-light">Total Tweeters:
                     <span id="total-twitter"></span>
                 </div>
                 <div class="mt-1">
@@ -69,7 +72,7 @@
                     <div class="mt-3 mr-md-5 d-flex align-items-center">
                         <input type="text" class="form-control rounded-left" id="inputSearch" placeholder="Search for topics">
                         <div class="input-group-append rounded-right">
-                            <button class="btn btn-secondary rounded-right"><i class="fas fa-search"></i></button>
+                            <button class="btn rounded-right searchIcon"><i class="fas fa-search"></i></button>
                         </div>
                     </div>
                     <div class="card mt-3 mr-md-5 pb-3">
@@ -80,17 +83,16 @@
                             </div>
                         </div>
                         <div class="mt-3 ml-3">
-                            <img class="mr-2 rounded-pill" src="img/cat.png" width="50" height="50">
-                            <span class="name">Hưng Tạ</span>
+                            <img class="mr-2 rounded-pill" src="img/hung.jpg" width="50" height="50">
+                            <span>Hưng Tạ</span>
                         </div>
                         <div class="mt-3 ml-3">
-                            <img class="mr-2 rounded-pill" src="img/cat.png" width="50" height="50">
-                            <span class="name">Bình Nguyễn</span>
+                            <img class="mr-2 rounded-pill" src="img/binh.jpg" width="50" height="50">
+                            <span>Bình Nguyễn</span>
                         </div>
                     </div>
-                    <div class="mr-md-5 mt-3">
-                        <a class="btn" id="signOut"><i class="fas fa-sign-out-alt signOutBtn"></i><span> Sign Out</span></a>
-                        
+                    <div class="mr-md-5 mt-3 signOutBtn">
+                        <a class="btn" id="signOut"><i class="fas fa-sign-out-alt"></i><span> Sign Out</span></a>
                     </div>
                 </div>
             </div>
