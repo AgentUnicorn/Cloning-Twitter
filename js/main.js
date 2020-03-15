@@ -97,11 +97,25 @@ const deleteTwitt = (originId) => {
 const reTwitt = (originId) => {
     let originTwitt = twitterArray.find((item) => item.id == originId)
     let newTwittContent = prompt('Why you retwitt ?')
+    let styleMention = `style="font-weight:bold; color: red; cursor: pointer;"`
+        // let originalContent = textArea.value
+    let arrayContent = newTwittContent.split(' ')
+    hashTagArray = arrayContent.filter((text) => text[0] == '#')
+
+    for (let i = 0; i < arrayContent.length; i++) {
+        if (arrayContent[i][0] == '#' || arrayContent[i][0] == '@') {
+            arrayContent[i] = `<span onclick="hashTagFilter('${arrayContent[i]}')" ${arrayContent[i][0] == '@' ? styleMention : ''} style="color:blue; cursor: pointer;">${arrayContent[i]}</span>`
+        }
+        if (arrayContent[i].includes('http')) {
+            arrayContent[i] = `<img class="w-100 h-50" src="${arrayContent[i]}" alt="img">`
+        }
+    }
+    let contentConvert = arrayContent.join(' ')
     let reTwittObject = {
         id: id,
         userName: currentName.userName,
         timeTwitt: moment().startOf('hour').fromNow(),
-        content: newTwittContent,
+        content: contentConvert,
         like: false,
         comment: '',
         original: {
