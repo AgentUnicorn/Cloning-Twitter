@@ -1,5 +1,7 @@
 let userInput = document.getElementById('inputUser')
-const signInButton = document.getElementById("signIn");
+document.getElementById('inputPassword').disabled = true;
+const signInButton = document.getElementById('signIn')
+
 
 const signIn = (e) => {
     e.preventDefault()
