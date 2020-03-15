@@ -1,7 +1,17 @@
+let userInput = document.getElementById('inputUser')
 document.getElementById('inputPassword').disabled = true;
-let userName = document.getElementById('inputUser');
+const signInButton = document.getElementById('signIn')
 
-let signIn = () => {
-    console.log(userName)
-    window.open("main.html","_self");
+
+const signIn = (e) => {
+    e.preventDefault()
+    let user = {
+        userName: userInput.value
+    }
+    localStorage.setItem('data', JSON.stringify(user))
+    window.location.replace("/main.html")
 }
+
+
+
+signInButton.addEventListener("click", signIn)

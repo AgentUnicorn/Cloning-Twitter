@@ -9,8 +9,7 @@ body {
 
 .hoverbtn {
   transition: all;
-  transition-duration: 0.4s;
-  transition-delay: 0.2s;
+  transition-duration: 0.2s;
   transform: scale(1);
   color:red;
 }
@@ -18,6 +17,10 @@ body {
 .hoverbtn:hover {
   font-size: 20px;
 }
+.pstfix {
+  position: fixed;
+}
 
-
-
+.signOutBtn {
+  font-size: 30px;
+}

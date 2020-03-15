@@ -1,9 +1,21 @@
 let textArea = document.getElementById('textArea')
 let userImg = document.getElementById('user-img')
+const signOutButton = document.getElementById('signOut')
     // let userInput = document.getElementById('userInput')
-let twitterArray = []
+const getData = () => {
+    let dataArray = JSON.parse(localStorage.getItem('dataTweet'))
+    if (dataArray == null) {
+        dataArray = []
+    }
+    return dataArray
+}
+
+
+let twitterArray = getData()
 let hashTagArray = []
 let id = 0;
+
+
 
 
 const countText = () => {
@@ -15,13 +27,16 @@ const countText = () => {
         document.getElementById('countText').innerHTML = `${countResult} characters left`
 }
 
-// const signIn = () => {
-//     window.open("main.html");
-//     let userName = userInput.value
-//     debugger
-//     document.getElementById('userName').innerHTML = `Hello ${userName}`
-// }
 textArea.addEventListener('input', countText)
+let currentName = JSON.parse(localStorage.getItem('data'))
+console.log(currentName)
+
+textArea.addEventListener("keydown", (a) => {
+    if (a.keyCode === 13) {
+        addTwitter();
+        a.preventDefault()
+    }
+})
 
 const addTwitter = () => {
     let styleMention = `style="font-weight:bold; color: red; cursor: pointer;"`
@@ -38,7 +53,7 @@ const addTwitter = () => {
         // console.log('user image:', userImg.value)
     let twitterStory = {
         id: id,
-        userName: 'Hung',
+        userName: currentName.userName,
         timeTwitt: moment().startOf('hour').fromNow(),
         content: contentConvert,
         like: false,
@@ -50,7 +65,8 @@ const addTwitter = () => {
     console.log('this is hastag', twitterStory.hashtagText)
     render(twitterArray)
     id++
-
+    document.getElementById('textArea').value = ''
+    document.getElementById('countText').innerHTML = `140 characters left`
 
 }
 const toggleLike = (id) => {
@@ -87,7 +103,7 @@ const reTwitt = (originId) => {
     let newTwittContent = prompt('Why you retwitt ?')
     let reTwittObject = {
         id: id,
-        userName: 'Hung',
+        userName: currentName.userName,
         timeTwitt: moment().startOf('hour').fromNow(),
         content: newTwittContent,
         like: false,
@@ -95,7 +111,7 @@ const reTwitt = (originId) => {
         original: {
             timeTwitt: originTwitt.timeTwitt,
             id: originId,
-            userName: 'Hung',
+            userName: currentName.userName,
             content: originTwitt.content,
             // more
         } // original tweet info
@@ -117,27 +133,31 @@ const render = (array) => {
     console.log(array)
     let resultArray = array.map((item, i) => {
         let retwitt // by default will be null
-        let comment = `<div>${item.userName} Comment</div><span></span> <p>${item.comment}</p>`
+        let comment =  `<div class="ml-4 pt-3 pb-3">
+                            <img class="mr-2 rounded-pill" src="img/cat.png" width="50" height="50">
+                            <span style="color:rgb(47,208,231); font-weight:bold">${item.userName}</span> 
+                            <span>${item.comment}</span>
+                        </div>`    
         let imgTwitt = `<div><img src="${item.image}" alt=""></div>`
         if (item.original) { // check if there is a original object in side item (tweet)
             retwitt = `
             <div class="card">
-            
-                <div class="card-header"><img class="mr-2 rounded-pill" src="img/cat.png" width="50" height="50">
-                ${item.original.userName}<span> ${item.original.timeTwitt}</span>
+                <div class="card-header">
+                    <img class="mr-2 rounded-pill" src="img/cat.png" width="50" height="50">
+                    <span style="color:rgb(47,208,231); font-weight:bold">${item.original.userName}</span>
+                    <span class="text-muted">${item.original.timeTwitt}</span>
                     <div class="card-body">
                         <p class="card-text">${item.original.content}</p>   
                     </div>
                 </div>
-            </div>
-            `
+            </div>`
         }
         let tweet = `
-        <div class="card mt-5 w-100"  style="border-color:blue">
+        <div class="card mt-5 w-100"  style="border-color:rgb(47,208,231)">
             <div class="card-header">
                 <img class="mr-2 rounded-pill" src="img/cat.png" width="50" height="50">
-                ${item.userName}
-                <span>${item.timeTwitt}</span>
+                <span class="h5" style="color:rgb(47,208,231); font-weight:bold">${item.userName}</span>
+                <span class="h6 text-muted">${item.timeTwitt}</span>
             </div>
             <div class="card-body">
                 <p class="card-text">${item.content}</p>
@@ -145,9 +165,9 @@ const render = (array) => {
                 ${imgTwitt ? imgTwitt : ''}
             </div>
             <div class="card-footer">
-                <a onclick="toggleLike(${item.id})" class="btn">${item.like ? '<i class="fas fa-heart hoverbtn" style="color:red"></i><span> Like</span>' : '<i class="far fa-heart hoverbtn" style="color:blue"></i><span> Unlike</span>'}</a>
-                <a onclick="addComment(${i})" class="btn"><i class="far fa-comment hoverbtn" style="color:blue"></i><span> Comment</span></a>
-                <a onclick="reTwitt(${item.id})" class="btn"><i class="fas fa-retweet hoverbtn" style="color:blue"></i><span> Retweet</span></a>
+                <a onclick="toggleLike(${item.id})" class="btn">${item.like ? '<i class="fas fa-heart hoverbtn" style="color:red"></i><span> Like</span>' : '<i class="far fa-heart hoverbtn" style="color:rgb(47,208,231)"></i><span> Unlike</span>'}</a>
+                <a onclick="addComment(${i})" class="btn"><i class="far fa-comment hoverbtn" style="color:rgb(47,208,231)"></i><span> Comment</span></a>
+                <a onclick="reTwitt(${item.id})" class="btn"><i class="fas fa-retweet hoverbtn" style="color:rgb(47,208,231)"></i><span> Retweet</span></a>
                 <a onclick="deleteTwitt(${item.id})" class="btn"><i class="far fa-trash-alt hoverbtn" style="color:red"></i><span> Delete</span></a>   
             </div>
             ${item.comment ? comment : ''}
@@ -158,5 +178,17 @@ const render = (array) => {
 
     document.getElementById('twitter-stories').innerHTML = resultArray
     document.getElementById('total-twitter').innerHTML = twitterArray.length
+    saveData()
 
 }
+
+const saveData = () => {
+    localStorage.setItem('dataTweet', JSON.stringify(twitterArray))
+}
+
+const signOut = () => {
+    window.location.replace("/index.html")
+
+}
+signOutButton.addEventListener("click", signOut)
+render(twitterArray)
