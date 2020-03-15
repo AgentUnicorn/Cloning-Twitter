@@ -1,6 +1,14 @@
 let textArea = document.getElementById('textArea')
 let userImg = document.getElementById('user-img')
-    // let userInput = document.getElementById('userInput')
+    // let urlObj = "https://api.myjson.com/bins/1gra4q"
+    // console.log('url', url)
+    // const getAPI = async() => {
+    //     let data = await fetch(url)
+    //     let result = await data.json()
+    //     console.log(result)
+    // }
+    // getAPI()
+
 const getData = () => {
     let dataArray = JSON.parse(localStorage.getItem('dataTweet'))
     if (dataArray == null) {
