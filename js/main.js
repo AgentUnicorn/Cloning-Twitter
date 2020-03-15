@@ -1,9 +1,19 @@
 let textArea = document.getElementById('textArea')
 let userImg = document.getElementById('user-img')
     // let userInput = document.getElementById('userInput')
-let twitterArray = []
+const getData = () => {
+    let dataArray = JSON.parse(localStorage.getItem('dataTweet'))
+    if (dataArray == null) {
+        dataArray = []
+    }
+    return dataArray
+}
+
+let twitterArray = getData()
 let hashTagArray = []
 let id = 0;
+
+
 
 
 const countText = () => {
@@ -22,6 +32,8 @@ const countText = () => {
 //     document.getElementById('userName').innerHTML = `Hello ${userName}`
 // }
 textArea.addEventListener('input', countText)
+let currentName = JSON.parse(localStorage.getItem('data'))
+console.log(currentName)
 
 const addTwitter = () => {
     let styleMention = `style="font-weight:bold; color: red; cursor: pointer;"`
@@ -38,7 +50,7 @@ const addTwitter = () => {
         // console.log('user image:', userImg.value)
     let twitterStory = {
         id: id,
-        userName: 'Hung',
+        userName: currentName.userName,
         timeTwitt: moment().startOf('hour').fromNow(),
         content: contentConvert,
         like: false,
@@ -50,6 +62,7 @@ const addTwitter = () => {
     console.log('this is hastag', twitterStory.hashtagText)
     render(twitterArray)
     id++
+    document.getElementById('textArea').value = ''
 
 
 }
@@ -87,7 +100,7 @@ const reTwitt = (originId) => {
     let newTwittContent = prompt('Why you retwitt ?')
     let reTwittObject = {
         id: id,
-        userName: 'Hung',
+        userName: currentName.userName,
         timeTwitt: moment().startOf('hour').fromNow(),
         content: newTwittContent,
         like: false,
@@ -95,7 +108,7 @@ const reTwitt = (originId) => {
         original: {
             timeTwitt: originTwitt.timeTwitt,
             id: originId,
-            userName: 'Hung',
+            userName: currentName.userName,
             content: originTwitt.content,
             // more
         } // original tweet info
@@ -158,5 +171,11 @@ const render = (array) => {
 
     document.getElementById('twitter-stories').innerHTML = resultArray
     document.getElementById('total-twitter').innerHTML = twitterArray.length
+    saveData()
 
 }
+
+const saveData = () => {
+    localStorage.setItem('dataTweet', JSON.stringify(twitterArray))
+}
+render(twitterArray)
