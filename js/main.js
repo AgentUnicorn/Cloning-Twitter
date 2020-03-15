@@ -31,13 +31,6 @@ textArea.addEventListener('input', countText)
 let currentName = JSON.parse(localStorage.getItem('data'))
 console.log(currentName)
 
-textArea.addEventListener("keydown", (a) => {
-    if (a.keyCode === 13) {
-        addTwitter();
-        a.preventDefault()
-    }
-})
-
 const addTwitter = () => {
     let styleMention = `style="font-weight:bold; color: red; cursor: pointer;"`
     let originalContent = textArea.value
@@ -47,6 +40,9 @@ const addTwitter = () => {
     for (let i = 0; i < arrayContent.length; i++) {
         if (arrayContent[i][0] == '#' || arrayContent[i][0] == '@') {
             arrayContent[i] = `<span onclick="hashTagFilter('${arrayContent[i]}')" ${arrayContent[i][0] == '@' ? styleMention : ''} style="color:blue; cursor: pointer;">${arrayContent[i]}</span>`
+        }
+        if (arrayContent[i].includes('http')) {
+            arrayContent[i] = `<img class="w-100 h-50" src="${arrayContent[i]}" alt="img">`
         }
     }
     let contentConvert = arrayContent.join(' ')
@@ -78,6 +74,7 @@ const toggleLike = (id) => {
 const addComment = (i) => {
     twitterArray[i].comment = prompt('Enter Your Message')
     render(twitterArray)
+
 }
 
 const deleteTwitt = (originId) => {
@@ -93,7 +90,6 @@ const deleteTwitt = (originId) => {
     }
 
     twitterArray = twitterArray.filter((item) => item.id !== originId);
-
 
     render(twitterArray)
 }
@@ -111,7 +107,7 @@ const reTwitt = (originId) => {
         original: {
             timeTwitt: originTwitt.timeTwitt,
             id: originId,
-            userName: currentName.userName,
+            userName: originTwitt.userName,
             content: originTwitt.content,
             // more
         } // original tweet info
@@ -178,6 +174,7 @@ const render = (array) => {
 
     document.getElementById('twitter-stories').innerHTML = resultArray
     document.getElementById('total-twitter').innerHTML = twitterArray.length
+    document.getElementById('countText').innerHTML = `140 characters left`
     saveData()
 
 }

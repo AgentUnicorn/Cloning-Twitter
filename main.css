@@ -24,3 +24,15 @@ body {
 .signOutBtn {
   font-size: 30px;
 }
+
+.name {
+  color: rgb(47,208,208)
+}
+
+.nameTag {
+  text-decoration: none;
+}
+
+.nameTag:hover {
+  color:black;
+} 

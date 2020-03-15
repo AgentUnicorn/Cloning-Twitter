@@ -12,6 +12,4 @@ const signIn = (e) => {
     window.location.replace("/main.html")
 }
 
-
-
 signInButton.addEventListener("click", signIn)
