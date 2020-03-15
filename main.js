@@ -1,19 +1,9 @@
 let textArea = document.getElementById('textArea')
 let userImg = document.getElementById('user-img')
     // let userInput = document.getElementById('userInput')
-const getData = () => {
-    let dataArray = JSON.parse(localStorage.getItem('dataTweet'))
-    if (dataArray == null) {
-        dataArray = []
-    }
-    return dataArray
-}
-
-let twitterArray = getData()
+let twitterArray = []
 let hashTagArray = []
 let id = 0;
-
-
 
 
 const countText = () => {
@@ -32,17 +22,15 @@ const countText = () => {
 //     document.getElementById('userName').innerHTML = `Hello ${userName}`
 // }
 textArea.addEventListener('input', countText)
-let currentName = JSON.parse(localStorage.getItem('data'))
-console.log(currentName)
 
 const addTwitter = () => {
     let styleMention = `style="font-weight:bold; color: red; cursor: pointer;"`
     let originalContent = textArea.value
     let arrayContent = originalContent.split(' ')
-    hashTagArray = arrayContent.filter((text) => text[0] == '#')
+    hashTagArray = arrayContent.filter((text) => text[0] === '#')
 
     for (let i = 0; i < arrayContent.length; i++) {
-        if (arrayContent[i][0] == '#' || arrayContent[i][0] == '@') {
+        if (arrayContent[i][0] === '#' || arrayContent[i][0] === '@') {
             arrayContent[i] = `<span onclick="hashTagFilter('${arrayContent[i]}')" ${arrayContent[i][0] == '@' ? styleMention : ''} style="color:blue; cursor: pointer;">${arrayContent[i]}</span>`
         }
     }
@@ -50,7 +38,7 @@ const addTwitter = () => {
         // console.log('user image:', userImg.value)
     let twitterStory = {
         id: id,
-        userName: currentName.userName,
+        userName: 'Hung',
         timeTwitt: moment().startOf('hour').fromNow(),
         content: contentConvert,
         like: false,
@@ -62,7 +50,6 @@ const addTwitter = () => {
     console.log('this is hastag', twitterStory.hashtagText)
     render(twitterArray)
     id++
-    document.getElementById('textArea').value = ''
 
 
 }
@@ -100,7 +87,7 @@ const reTwitt = (originId) => {
     let newTwittContent = prompt('Why you retwitt ?')
     let reTwittObject = {
         id: id,
-        userName: currentName.userName,
+        userName: 'Hung',
         timeTwitt: moment().startOf('hour').fromNow(),
         content: newTwittContent,
         like: false,
@@ -108,7 +95,7 @@ const reTwitt = (originId) => {
         original: {
             timeTwitt: originTwitt.timeTwitt,
             id: originId,
-            userName: currentName.userName,
+            userName: 'Hung',
             content: originTwitt.content,
             // more
         } // original tweet info
@@ -135,9 +122,7 @@ const render = (array) => {
         if (item.original) { // check if there is a original object in side item (tweet)
             retwitt = `
             <div class="card">
-            
-                <div class="card-header"><img class="mr-2 rounded-pill" src="img/cat.png" width="50" height="50">
-                ${item.original.userName}<span> ${item.original.timeTwitt}</span>
+                <div class="card-header">${item.original.userName}<span>${item.original.timeTwitt}</span>
                     <div class="card-body">
                         <p class="card-text">${item.original.content}</p>   
                     </div>
@@ -146,22 +131,20 @@ const render = (array) => {
             `
         }
         let tweet = `
-        <div class="card mt-5 w-100"  style="border-color:blue">
-            <div class="card-header">
-                <img class="mr-2 rounded-pill" src="img/cat.png" width="50" height="50">
-                ${item.userName}
-                <span>${item.timeTwitt}</span>
-            </div>
+        <div class="card mt-5">
+                <div class="card-header">
+                    ${item.userName}
+                    <span>${item.timeTwitt}</span>
+                </div>
             <div class="card-body">
                 <p class="card-text">${item.content}</p>
                 ${retwitt ? retwitt : ""}
                 ${imgTwitt ? imgTwitt : ''}
-            </div>
-            <div class="card-footer">
-                <a onclick="toggleLike(${item.id})" class="btn">${item.like ? '<i class="fas fa-heart hoverbtn" style="color:red"></i><span> Like</span>' : '<i class="far fa-heart hoverbtn" style="color:blue"></i><span> Unlike</span>'}</a>
-                <a onclick="addComment(${i})" class="btn"><i class="far fa-comment hoverbtn" style="color:blue"></i><span> Comment</span></a>
-                <a onclick="reTwitt(${item.id})" class="btn"><i class="fas fa-retweet hoverbtn" style="color:blue"></i><span> Retweet</span></a>
-                <a onclick="deleteTwitt(${item.id})" class="btn"><i class="far fa-trash-alt hoverbtn" style="color:red"></i><span> Delete</span></a>   
+                <a onclick="toggleLike(${item.id})" class="btn btn-primary">${item.like ? 'UnLike' : 'Like'}</a>
+                <a onclick="addComment(${i})" class="btn btn-primary">Comment</a>
+                <a onclick="reTwitt(${item.id})" class="btn btn-primary">Retwitt</a>
+                <a onclick="deleteTwitt(${item.id})" class="btn btn-primary">Delete</a>
+                
             </div>
             ${item.comment ? comment : ''}
         </div>`
@@ -171,11 +154,5 @@ const render = (array) => {
 
     document.getElementById('twitter-stories').innerHTML = resultArray
     document.getElementById('total-twitter').innerHTML = twitterArray.length
-    saveData()
 
 }
-
-const saveData = () => {
-    localStorage.setItem('dataTweet', JSON.stringify(twitterArray))
-}
-render(twitterArray)
