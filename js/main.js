@@ -2,20 +2,26 @@ let textArea = document.getElementById('textArea')
 let userImg = document.getElementById('user-img')
 const signOutButton = document.getElementById('signOut')
     // let userInput = document.getElementById('userInput')
-const getData = () => {
-    let dataArray = JSON.parse(localStorage.getItem('dataTweet'))
-    if (dataArray == null) {
-        dataArray = []
-    }
-    return dataArray
+let twitterArray = []
+
+
+
+async function getData() {
+    const res = await fetch("https://api.myjson.com/bins/1gvs62");
+    const data = await res.json();
+    console.log(data)
+        // let dataArray = JSON.parse(localStorage.getItem('dataTweet'))
+        // if (dataArray == null) {
+        //    dataArray = []
+        // }
+    return data || []
 }
 
 
-let twitterArray = getData()
+
+
 let hashTagArray = []
 let id = 0;
-
-
 
 
 const countText = () => {
@@ -36,7 +42,7 @@ const addTwitter = () => {
     let originalContent = textArea.value
     let arrayContent = originalContent.split(' ')
     hashTagArray = arrayContent.filter((text) => text[0] == '#')
-
+        // cai mớ gì đay chen hash tag vs img của e đó :)))
     for (let i = 0; i < arrayContent.length; i++) {
         if (arrayContent[i][0] == '#' || arrayContent[i][0] == '@') {
             arrayContent[i] = `<span onclick="hashTagFilter('${arrayContent[i]}')" ${arrayContent[i][0] == '@' ? styleMention : ''} style="color:blue; cursor: pointer;">${arrayContent[i]}</span>`
@@ -95,41 +101,42 @@ const deleteTwitt = (originId) => {
 }
 
 const reTwitt = (originId) => {
-    let originTwitt = twitterArray.find((item) => item.id == originId)
-    let newTwittContent = prompt('Why you retwitt ?')
-    let styleMention = `style="font-weight:bold; color: red; cursor: pointer;"`
-        // let originalContent = textArea.value
-    let arrayContent = newTwittContent.split(' ')
-    hashTagArray = arrayContent.filter((text) => text[0] == '#')
+        let originTwitt = twitterArray.find((item) => item.id == originId)
+        let newTwittContent = prompt('Why you retwitt ?')
+        let styleMention = `style="font-weight:bold; color: red; cursor: pointer;"`
+            // let originalContent = textArea.value
+        let arrayContent = newTwittContent.split(' ')
+        hashTagArray = arrayContent.filter((text) => text[0] == '#')
 
-    for (let i = 0; i < arrayContent.length; i++) {
-        if (arrayContent[i][0] == '#' || arrayContent[i][0] == '@') {
-            arrayContent[i] = `<span onclick="hashTagFilter('${arrayContent[i]}')" ${arrayContent[i][0] == '@' ? styleMention : ''} style="color:blue; cursor: pointer;">${arrayContent[i]}</span>`
+        for (let i = 0; i < arrayContent.length; i++) {
+            if (arrayContent[i][0] == '#' || arrayContent[i][0] == '@') {
+                arrayContent[i] = `<span onclick="hashTagFilter('${arrayContent[i]}')" ${arrayContent[i][0] == '@' ? styleMention : ''} style="color:blue; cursor: pointer;">${arrayContent[i]}</span>`
+            }
+            if (arrayContent[i].includes('http')) {
+                arrayContent[i] = `<img class="w-100 h-50" src="${arrayContent[i]}" alt="img">`
+            }
         }
-        if (arrayContent[i].includes('http')) {
-            arrayContent[i] = `<img class="w-100 h-50" src="${arrayContent[i]}" alt="img">`
+        let contentConvert = arrayContent.join(' ')
+        let reTwittObject = {
+            id: id,
+            userName: currentName.userName,
+            timeTwitt: moment().startOf('hour').fromNow(),
+            content: contentConvert,
+            like: false,
+            comment: '',
+            original: {
+                timeTwitt: originTwitt.timeTwitt,
+                id: originId,
+                userName: originTwitt.userName,
+                content: originTwitt.content,
+                // more
+            } // original tweet info
         }
+        twitterArray.unshift(reTwittObject)
+        render(twitterArray)
+        id++
     }
-    let contentConvert = arrayContent.join(' ')
-    let reTwittObject = {
-        id: id,
-        userName: currentName.userName,
-        timeTwitt: moment().startOf('hour').fromNow(),
-        content: contentConvert,
-        like: false,
-        comment: '',
-        original: {
-            timeTwitt: originTwitt.timeTwitt,
-            id: originId,
-            userName: originTwitt.userName,
-            content: originTwitt.content,
-            // more
-        } // original tweet info
-    }
-    twitterArray.unshift(reTwittObject)
-    render(twitterArray)
-    id++
-}
+    // vừa ngủ dậy
 
 const hashTagFilter = (text) => {
     console.log('text', text)
@@ -137,17 +144,31 @@ const hashTagFilter = (text) => {
         return item.hashtagText.includes(text);
     })
     render(a)
+};
+
+const updateData = async(obj) => {
+    const resp = await fetch("https://api.myjson.com/bins/1gvs62", {
+        method: "PUT",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(obj)
+    });
+    const data = await resp.json(); // không cần dòng này vì không quan tâm lắm kết quả
 }
 
-const render = (array) => {
+const render = async(array) => {
+
     console.log(array)
+    await updateData(array) // update api
+
     let resultArray = array.map((item, i) => {
         let retwitt // by default will be null
-        let comment =  `<div class="ml-4 pt-3 pb-3">
+        let comment = `<div class="ml-4 pt-3 pb-3">
                             <img class="mr-2 rounded-pill" src="img/cat.png" width="50" height="50">
                             <span style="color:rgb(47,208,231); font-weight:bold">${item.userName}</span> 
                             <span>${item.comment}</span>
-                        </div>`    
+                        </div>`
         let imgTwitt = `<div><img src="${item.image}" alt=""></div>`
         if (item.original) { // check if there is a original object in side item (tweet)
             retwitt = `
@@ -203,4 +224,11 @@ const signOut = () => {
 
 }
 signOutButton.addEventListener("click", signOut)
-render(twitterArray)
+
+
+
+async function runApp() {
+    twitterArray = await getData()
+    render(twitterArray)
+}
+runApp()
