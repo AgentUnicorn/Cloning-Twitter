@@ -42,7 +42,7 @@ const addTwitter = () => {
     let originalContent = textArea.value
     let arrayContent = originalContent.split(' ')
     hashTagArray = arrayContent.filter((text) => text[0] == '#')
-        // cai mớ gì đay chen hash tag vs img của e đó :)))
+
     for (let i = 0; i < arrayContent.length; i++) {
         if (arrayContent[i][0] == '#' || arrayContent[i][0] == '@') {
             arrayContent[i] = `<span onclick="hashTagFilter('${arrayContent[i]}')" ${arrayContent[i][0] == '@' ? styleMention : ''} style="color:blue; cursor: pointer;">${arrayContent[i]}</span>`
@@ -101,42 +101,43 @@ const deleteTwitt = (originId) => {
 }
 
 const reTwitt = (originId) => {
-        let originTwitt = twitterArray.find((item) => item.id == originId)
-        let newTwittContent = prompt('Why you retwitt ?')
-        let styleMention = `style="font-weight:bold; color: red; cursor: pointer;"`
-            // let originalContent = textArea.value
-        let arrayContent = newTwittContent.split(' ')
-        hashTagArray = arrayContent.filter((text) => text[0] == '#')
+    let originTwitt = twitterArray.find((item) => item.id == originId)
+    let newTwittContent = prompt('Why you retwitt ?')
+    let styleMention = `style="font-weight:bold; color: red; cursor: pointer;"`
+        // let originalContent = textArea.value
+    let arrayContent = newTwittContent.split(' ')
+    hashTagArray = arrayContent.filter((text) => text[0] == '#')
 
-        for (let i = 0; i < arrayContent.length; i++) {
-            if (arrayContent[i][0] == '#' || arrayContent[i][0] == '@') {
-                arrayContent[i] = `<span onclick="hashTagFilter('${arrayContent[i]}')" ${arrayContent[i][0] == '@' ? styleMention : ''} style="color:blue; cursor: pointer;">${arrayContent[i]}</span>`
-            }
-            if (arrayContent[i].includes('http')) {
-                arrayContent[i] = `<img class="w-100 h-50" src="${arrayContent[i]}" alt="img">`
-            }
+    for (let i = 0; i < arrayContent.length; i++) {
+        if (arrayContent[i][0] == '#' || arrayContent[i][0] == '@') {
+            arrayContent[i] = `<span onclick="hashTagFilter('${arrayContent[i]}')" ${arrayContent[i][0] == '@' ? styleMention : ''} style="color:blue; cursor: pointer;">${arrayContent[i]}</span>`
         }
-        let contentConvert = arrayContent.join(' ')
-        let reTwittObject = {
-            id: id,
-            userName: currentName.userName,
-            timeTwitt: moment().startOf('hour').fromNow(),
-            content: contentConvert,
-            like: false,
-            comment: '',
-            original: {
-                timeTwitt: originTwitt.timeTwitt,
-                id: originId,
-                userName: originTwitt.userName,
-                content: originTwitt.content,
-                // more
-            } // original tweet info
+        if (arrayContent[i].includes('http')) {
+            arrayContent[i] = `<img class="w-100 h-50" src="${arrayContent[i]}" alt="img">`
         }
-        twitterArray.unshift(reTwittObject)
-        render(twitterArray)
-        id++
     }
-    // vừa ngủ dậy
+    let contentConvert = arrayContent.join(' ')
+    let reTwittObject = {
+        id: id,
+        userName: currentName.userName,
+        timeTwitt: moment().startOf('hour').fromNow(),
+        content: contentConvert,
+        like: false,
+        comment: '',
+        hashtagText: hashTagArray,
+        original: {
+            timeTwitt: originTwitt.timeTwitt,
+            id: originId,
+            userName: originTwitt.userName,
+            content: originTwitt.content,
+            // more
+        } // original tweet info
+    }
+    twitterArray.unshift(reTwittObject)
+    render(twitterArray)
+    id++
+}
+
 
 const hashTagFilter = (text) => {
     console.log('text', text)
@@ -163,7 +164,7 @@ const render = async(array) => {
     await updateData(array) // update api
 
     let resultArray = array.map((item, i) => {
-        let retwitt // by default will be null
+        let retwitt;
         let comment = `<div class="ml-4 pt-3 pb-3">
                             <img class="mr-2 rounded-pill" src="img/cat.png" width="50" height="50">
                             <span style="color:rgb(47,208,231); font-weight:bold">${item.userName}</span> 
